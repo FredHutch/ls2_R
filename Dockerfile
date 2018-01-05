@@ -1,5 +1,14 @@
 FROM fredhutch/ls2:EB-3.4.1_foss-2016b_20171030
 
+# clean-up - move this upstream!
+USER root
+RUN apt-get remove --purge -y \
+    zlib1g-dev \
+    manpages-dev \
+    libssl-dev \
+    dpkg-dev
+RUN apt-get autoremove -y
+
 USER neo
 WORKDIR /home/neo
 SHELL ["/bin/bash", "-c"]
@@ -37,11 +46,14 @@ COPY easybuild-life-sciences/fh_easyconfigs/GDAL-2.1.1-foss-2016b.eb /home/neo/.
 # needed for R pkg
 COPY easybuild-life-sciences/fh_easyconfigs/JAGS-4.2.0-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
 #libGLU', '9.0.0
-#Mesa', '12.0.2
+COPY easybuild-life-sciences/fh_easyconfigs/Mesa-12.0.2-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
+COPY easybuild-life-sciences/fh_easyconfigs/LLVM-3.9.1-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
 #cairo', '1.14.6
 # needed for R pkg
+COPY easybuild-life-sciences/fh_easyconfigs/unixODBC-2.3.4-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
 COPY easybuild-life-sciences/fh_easyconfigs/PostgreSQL-9.6.1-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
 COPY easybuild-life-sciences/fh_easyconfigs/netCDF-4.5.0-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
+COPY easybuild-life-sciences/fh_easyconfigs/Doxygen-1.8.13-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
 # needed for R pkg
 COPY easybuild-life-sciences/fh_easyconfigs/GLPK-4.61-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
 # needed for R pkg
@@ -56,7 +68,7 @@ COPY easybuild-life-sciences/fh_easyconfigs/UDUNITS-2.1.24-foss-2016b.eb /home/n
 COPY easybuild-life-sciences/fh_easyconfigs/cyrus-sasl-2.1.26-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
 COPY easybuild-life-sciences/fh_easyconfigs/cyrus-sasl-2.1.26-types.patch /home/neo/.local/fh_easyconfigs/
 # needed for Rmysql pkg
-COPY easybuild-life-sciences/fh_easyconfigs/MariaDB-10.2.11-foss-2016b.eb /home/neo/.local/fh-easyconfigs/
+COPY easybuild-life-sciences/fh_easyconfigs/MariaDB-10.2.11-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
 COPY easybuild-life-sciences/fh_easyconfigs/jemalloc-5.0.1-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
 COPY easybuild-life-sciences/fh_easyconfigs/jemalloc-5.0.1-skip-install-doc.patch /home/neo/.local/fh_easyconfigs/
 
