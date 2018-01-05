@@ -1,13 +1,5 @@
 FROM fredhutch/ls2:EB-3.4.1_foss-2016b_20171030
 
-USER root
-WORKDIR /
-# install OS packages required
-# these are danglers with EasyBuild - why isn't pkg-config in foss?
-RUN apt-get update && apt-get install -y \
-    unixodbc-dev \
-    pkg-config
-
 USER neo
 WORKDIR /home/neo
 SHELL ["/bin/bash", "-c"]
@@ -20,8 +12,8 @@ COPY easybuild-life-sciences/fh_easyconfigs/R-3.4.3-foss-2016b-fh2.eb /home/neo/
 #bzip2', '1.0.6
 #XZ', '5.2.2
 #zlib', '1.2.8
-#SQLite', '3.13.0
-#PCRE', '8.39
+COPY easybuild-life-sciences/fh_easyconfigs/SQLite-3.13.0-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
+#PCRE', '8.38
 #libpng', '1.6.24
 #libjpeg-turbo', '1.5.0
 #libpthread-stubs', '0.3
@@ -32,7 +24,8 @@ COPY easybuild-life-sciences/fh_easyconfigs/Tcl-8.6.7-foss-2016b.eb /home/neo/.l
 COPY easybuild-life-sciences/fh_easyconfigs/Tk-8.6.7-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
 # Tk with X11 in Python
 COPY easybuild-life-sciences/fh_easyconfigs/Python-2.7.12-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
-#cURL', '7.49.1
+# Move OpenSSL into eb
+COPY easybuild-life-sciences/fh_easyconfigs/cURL-7.49.1-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
 #libxml2', '2.9.4
 #X11', '20160819
 #freeglut', '3.0.0
@@ -48,14 +41,14 @@ COPY easybuild-life-sciences/fh_easyconfigs/JAGS-4.2.0-foss-2016b.eb /home/neo/.
 #cairo', '1.14.6
 # needed for R pkg
 COPY easybuild-life-sciences/fh_easyconfigs/PostgreSQL-9.6.1-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
-#netCDF', '4.4.1
+COPY easybuild-life-sciences/fh_easyconfigs/netCDF-4.5.0-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
 # needed for R pkg
 COPY easybuild-life-sciences/fh_easyconfigs/GLPK-4.61-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
 # needed for R pkg
 COPY easybuild-life-sciences/fh_easyconfigs/ZeroMQ-4.1.4-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
 # needed for ZeroMQ - old version no longer downloadable
 COPY easybuild-life-sciences/fh_easyconfigs/libsodium-1.0.13-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
-#HDF5', '1.8.18
+COPY easybuild-life-sciences/fh_easyconfigs/HDF5-1.8.18-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
 COPY easybuild-life-sciences/fh_easyconfigs/OpenSSL-1.1.0f-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
 # needed for R pkg
 COPY easybuild-life-sciences/fh_easyconfigs/UDUNITS-2.1.24-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
