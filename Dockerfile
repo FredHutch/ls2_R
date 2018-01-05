@@ -65,6 +65,7 @@ COPY easybuild-life-sciences/fh_easyconfigs/cyrus-sasl-2.1.26-types.patch /home/
 # needed for Rmysql pkg
 COPY easybuild-life-sciences/fh_easyconfigs/MariaDB-10.2.11-foss-2016b.eb /home/neo/.local/fh-easyconfigs/
 COPY easybuild-life-sciences/fh_easyconfigs/jemalloc-5.0.1-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
+COPY easybuild-life-sciences/fh_easyconfigs/jemalloc-5.0.1-skip-install-doc.patch /home/neo/.local/fh_easyconfigs/
 
 # R sources that cannot be programmatically downloaded
 COPY sources/ASCAT_2.4.3.tar.gz /home/neo/.local/easybuild/sources/
