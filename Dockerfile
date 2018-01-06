@@ -16,6 +16,7 @@ SHELL ["/bin/bash", "-c"]
 # copy our easyconfig in
 COPY easybuild-life-sciences/fh_easyconfigs/R-3.4.3-foss-2016b-fh2.eb /home/neo/.local/fh_easyconfigs/
 # copy our easyconfigs for dependencies in place
+COPY easybuild-life-sciences/fh_easyconfigs/CMake-3.7.1-foss-2016b.eb /home/neo/.local/fh_easyconfigs/
 #libreadline', '6.3
 #ncurses', '6.0
 #bzip2', '1.0.6
