@@ -1,17 +1,4 @@
-FROM fredhutch/ls2:EB-3.4.1_foss-2016b_20171030
-
-# clean-up - move this upstream!
-USER root
-RUN apt-get remove --purge -y \
-    zlib1g-dev \
-    manpages-dev \
-    libssl-dev \
-    dpkg-dev
-RUN apt-get autoremove -y
-
-USER neo
-WORKDIR /home/neo
-SHELL ["/bin/bash", "-c"]
+FROM fredhutch/ls2.eb.foss:2016b
 
 # copy our easyconfig in
 COPY easybuild-life-sciences/fh_easyconfigs/R-3.4.3-foss-2016b-fh2.eb /home/neo/.local/fh_easyconfigs/
@@ -92,4 +79,7 @@ ENV EASYBUILD_MODULE_SYNTAX=Lua
 ENV EASYBUILD_ROBOT_PATHS=/home/neo/.local/fh_easyconfigs:
 
 # build R
-#RUN ml EasyBuild && eb R-3.4.3-foss-2016b-fh1.eb --robot
+RUN source /home/neo/.local/lmod/lmod/init/bash && \
+    module use /home/neo/.local/easybuild/modules/all && \
+    ml EasyBuild && \
+    eb -l R-3.4.3-foss-2016b-fh2.eb --robot
