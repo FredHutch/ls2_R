@@ -1,0 +1,13 @@
+--- RMySQL-0.10.13.orig/src/RS-MySQL.h	2017-08-14 08:58:09.000000000 -0700
++++ RMySQL-0.10.13/src/RS-MySQL.h	2018-01-08 13:12:23.921161929 -0800
+@@ -32,6 +32,10 @@
+ #include <mysql_com.h>
+ #include <string.h>
+ 
++#if defined MARIADB_CLIENT_VERSION_STR && ~defined MYSQL_SERVER_VERSION
++  # define MYSQL_SERVER_VERSION MARIADB_CLIENT_VERSION_STR
++#endif
++
+ // Objects =====================================================================
+ 
+ typedef struct RMySQLFields {
