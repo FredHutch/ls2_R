@@ -1,3 +1,6 @@
 [submodule "aws-batch-helpers"]
 	path = aws-batch-helpers
 	url = git@github.com:awslabs/aws-batch-helpers.git
+[submodule "easybuild-life-sciences"]
+	path = easybuild-life-sciences
+	url = ssh://git@github.com/FredHutch/easybuild-life-sciences

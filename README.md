@@ -1,37 +1,55 @@
-# ls2_R
-Our build of R, including many packages our users have requested over the years
-.
+# ls2_r
 
-This is an EasyBuild-based build, and pulls the R easyconfig from our easybuild-life-sciences repo on GitHub (is a submodule here).
+Please look at [ls2](https://github.com/FredHutch/ls2) for details on how to build these Dockerfiles and how to use them to deploy the same software to a local archive.
 
-R package requests should be made in issues on that repo, rather than this one. Issue on this repo should be related to the Dockerfile only.
+This container adds:
 
-# TODO
-[] - add awscli
-[] - add 'fetch-and-run' for AWS Batch use
-[] - add Bioconductor packages
-[] - add unixodbc
+* R and easy_update.py to update CRAN and Bioconductor library versions
 
-# Using
-The container has a user named `neo` with UID 500 and home directory /home/neo. All software is installed as that user in `~/.local` as EasyBuild does not run as root.
+## Building this container
 
-There is no process to run by default, so you will need to run a shell, use the `fetch-and-run` functionality once added, or extend this container into a new one with your code.
+Build this container with:
 
-With a shell or script, you will need to activate Lmod and load the R environment module like this:
+`docker build . --tag fredhutch/ls2_r:<ver> --build-arg EB_NAME=<name-ver>`
 
-```
-source /home/neo/.local/lmod/lmod/init/bash
-module use /home/neo/.local/easybuild/modules/all
-module load R/3.4.3-foss-2016b-fh2
-```
+Note that `EB_NAME` has no default value and not setting it will cause the build to fail.
 
+## Using this to deploy outside the container
 
+If you want to use this container to deploy identically to a location outside the container, these are the steps:
 
-# Build Notes
-OS Dependencies:
+1. Build the container normally
+1. Run the container with the deploy script:
+ * `docker run -ti --rm -v <outside_vol>:<outside_vol> --user root -e OUT_UID=${UID} -e OUT_GID=<GID> fredhutch/ls2_<repo_name>:<version> /bin/bash /ls2/deploy.sh`
 
-* unixodbc is still an OS dependency
+## FAQ on the ls2 deploy step
 
-Version suffix `-fh*n*` is how we build multiple versions of the same version of software, and should be going away soon.
+*Do I need to do this step?*
 
-The build takes a long time.
+No, once the initial container build is done, you have a container with the specified software pacakge(s) built and installed.
+
+*Why a second deploy step?*
+
+We use an NFS-mounted software volume to ensure our software is consistent across our HPC cluster and other Linux systems. This is the method we use to ensure the same software builds are present on our software volume and in ls2 containers.
+
+*Why do the outside_vol and "inside" outside_vol have to match?*
+
+Paths will be coded into the installed modulesfiles, so locations must be the same everywhere.
+
+*What are OUT_UID and stuff?*
+
+You will want the files written outside the container (in software volume) to be written by an owner and a group that make sense outside the container. Also, for collaboration (multiple builders if you choose), a common group is required. Note also that `OUT_PREFIX` and `<outside_vol>` must match
+
+*What about multiple builders (building under user accounts)?*
+
+You will want to have all builder accounts be members of the same group. That group should own your PREFIX (ex: /app) folder, and that folder should have the setgid bit set (ex: chmod g+s /app). 
+
+*Ben, I work with you and just want to update this software package!*
+
+Ok, to simple update the software version, run these commands:
+
+1. `docker build . --tag fredhutch/ls2_r:3.4.3 --build-arg EB_NAME=R-3.4.3-foss-2016b-fh2
+1. `docker push fredhutch/ls2_r:3.4.3`
+1. `docker run -ti --rm -v /app:/app --user root -e OUT_UID=${UID} OUT_GID=158372 fredhutch/ls2_r:3.4.3 /bin/bash /ls2/deploy.sh`
+
+This runs the successfully built `ls2_toolchain` container with our /app mounted, and then installs the toolchain environment modules as the OUT_UID with group OUT_GID to preserve permissions in /app. It also configures and updates the system cache.
