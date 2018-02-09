@@ -4,6 +4,7 @@ set -x
 set -e
 
 # variables used: EB_NAME, DEPLOY_PREFIX
+env
 
 # try to preserve group write here
 umask 002
@@ -16,9 +17,9 @@ module use ${DEPLOY_PREFIX}/modules/all
 module load EasyBuild
 
 # run easy_update
-RUN cd /app/fh_easyconfigs \
-    && python /ls2/easy_update.py ${EB_NAME}.eb \
-    && mv ${EB_NAME}.update ${EB_NAME}.eb
+cd /app/fh_easyconfigs \
+&& python /ls2/easy_update.py ${EB_NAME}.eb \
+&& mv ${EB_NAME}.update ${EB_NAME}.eb
 
 # build the easyconfig file
 eb -l ${EB_NAME}.eb --robot
