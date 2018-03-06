@@ -8,11 +8,19 @@ This container adds:
 
 ## Building this container
 
-Build this container with:
+This is a two-stage conatiner. First, we build a 'bare' version of R, and then a full version on top of that:
 
-`docker build . --tag fredhutch/ls2_r:<ver> --build-arg EB_NAME=<name-ver>`
+Build the bare container (for 3.4.3 in the example - this will expect an easyconfig called _R-3.4.3-foss-2016b-bare.eb_):
 
-Note that `EB_NAME` has no default value and not setting it will cause the build to fail.
+`docker build . -f Dockerfile.bare --tag fredhutch/ls2_r:3.4.3_bare --build-arg BARE_EB_NAME=R-3.4.3-foss-2016b`
+
+Note that `BARE_EB_NAME` has no default value and not setting it will cause the build to fail.
+
+Build the full container (for 3.4.3  with suffix '-fh2' for example - this will expect an easyconfig called _R-3.4.3-foss-2016b-fh2.eb_):
+
+`docker build . --tag fredhutch/ls2_r:3.4.3_fh2 --build-arg FH_SUFFIX=fh2`
+
+It uses BARE_EB_NAME from the previous build, and will need to have the Dockerfile edited to build _FROM_ the previous bare container image as well.
 
 ## Using this to deploy outside the container
 

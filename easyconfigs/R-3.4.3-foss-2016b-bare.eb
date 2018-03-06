@@ -9,7 +9,7 @@
 
 name = 'R'
 version = '3.4.3'
-versionsuffix='-fh2'
+versionsuffix='-bare'
 biocver = '3.6'
 
 homepage = 'http://www.r-project.org/'

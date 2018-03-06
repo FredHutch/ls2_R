@@ -8,11 +8,8 @@ FROM fredhutch/ls2_easybuild_toolchain:foss-2016b
 # ex: R-3.4.3-foss-2016b-fh2.eb EB_NAME=R-3.4.3-foss-2016b and FH_SUFFIX=fh2
 
 # easyconfig to build - leave '.eb' off and leave 'fh' suffix off
-ARG EB_NAME
-ENV EB_NAME=${EB_NAME}
-
-# we will build 'bare'
-ENV EB_NAME=${EB_NAME}-bare
+ARG BARE_EB_NAME
+ENV BARE_EB_NAME=${BARE_EB_NAME}
 
 # additional OS packages to install in the container
 ENV INSTALL_OS_PKGS "pkg-config build-essential libssl-dev libmysqlclient-dev python-requests"
@@ -24,6 +21,7 @@ ENV UNINSTALL_OS_PKGS "pkg-config build-essential libssl-dev libmysqlclient-dev 
 
 # copy install and deploy scripts in
 COPY install_eb.sh /ls2/
+COPY easy_update.sh /ls2/
 COPY deploy_eb.sh /ls2/
 COPY download_sources.sh /ls2/
 COPY easybuild-life-sciences/scripts/easy_update.py /ls2/
@@ -37,13 +35,14 @@ USER root
 RUN DEBIAN_FRONTEND=noninteractive \
     apt-get update -y \
     && apt-get install -y ${INSTALL_OS_PKGS} \
-    && su -c "/bin/bash /ls2/install_eb.sh" ${LS2_USERNAME} \
+    && /bin/bash /ls2/easy_update.sh ${BARE_EB_NAME}-bare \
+    && su -c "/bin/bash /ls2/install_eb.sh ${BARE_EB_NAME}-bare" ${LS2_USERNAME} \
     && AUTO_ADDED_PKGS=$(apt-mark showauto) apt-get remove -y --purge ${UNINSTALL_OS_PKGS} ${AUTO_ADDED_PKGS} \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
 # gather installed pkgs list
-RUN dpkg -l > /ls2/installed_pkgs.${EB_NAME}
+RUN dpkg -l > /ls2/installed_pkgs.${BARE_EB_NAME}-bare
 
 # switch to LS2 user for future actions
 USER ${LS2_USERNAME}

@@ -3,7 +3,7 @@
 set -x
 set -e
 
-# variables used: EB_NAME, DEPLOY_PREFIX
+# variables used: $1 easyconfig name
 env
 
 # try to preserve group write here
@@ -16,11 +16,6 @@ module use ${DEPLOY_PREFIX}/modules/all
 # load Easybuild
 module load EasyBuild
 
-# run easy_update
-cd /app/fh_easyconfigs \
-&& python /ls2/easy_update.py ${EB_NAME}.eb \
-&& mv ${EB_NAME}.update ${EB_NAME}.eb
-
 # build the easyconfig file
-eb -l ${EB_NAME}.eb --robot
+eb -l $1.eb --robot
 
