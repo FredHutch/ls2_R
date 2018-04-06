@@ -8,6 +8,13 @@ This container adds:
 
 ## Building this container
 
+Note that this repo uses submodules, so you will need to get those after cloning this repo. Do this:
+
+```
+git submodule init
+git submodule update
+```
+
 This is a two-stage conatiner. First, we build a 'bare' version of R, and then a full version on top of that:
 
 Build the bare container (for 3.4.3 in the example - this will expect an easyconfig called _R-3.4.3-foss-2016b-bare.eb_):
