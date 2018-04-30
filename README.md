@@ -4,7 +4,7 @@ Please look at [ls2](https://github.com/FredHutch/ls2) for details on how to bui
 
 ## Successful Builds
 
-* [R-3.4.3-foss-2016b-fh2.md](R-3.4.3-foss-2016b-fh2)
+* [R-3.4.3-foss-2016b-fh2](R-3.4.3-foss-2016b-fh2.md)
 
 This container adds:
 
