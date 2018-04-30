@@ -2,6 +2,10 @@
 
 Please look at [ls2](https://github.com/FredHutch/ls2) for details on how to build these Dockerfiles and how to use them to deploy the same software to a local archive.
 
+## Successful Builds
+
+* [R-3.4.3-foss-2016b-fh2.md](R-3.4.3-foss-2016b-fh2)
+
 This container adds:
 
 * R and easy_update.py to update CRAN and Bioconductor library versions
