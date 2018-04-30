@@ -1,7 +1,7 @@
 easyblock = 'ConfigureMake'
 
 name = 'GDAL'
-version = '2.1.1'
+version = '2.2.3'
 
 homepage = 'http://www.gdal.org/'
 description = """GDAL is a translator library for raster geospatial data formats that is released under an X/MIT style
@@ -15,8 +15,9 @@ toolchainopts = {'usempi': True}
 source_urls = ['http://download.osgeo.org/gdal/%(version)s/']
 sources = [SOURCELOWER_TAR_XZ]
 
-# problem with cryptopp being picked up on our build host
-configopts = '--with-cryptopp=no'
+buildopts = 'CXXFLAGS="$CXXFLAGS -DOMPI_IGNORE_CXX_SEEK"'
+
+configopts = '--with-cryptopp=no '
 
 dependencies = [
     ('netCDF', '4.5.0'),
@@ -24,6 +25,8 @@ dependencies = [
     ('libxml2', '2.9.4'),
     ('zlib', '1.2.8'),
     ('SQLite', '3.13.0'),
+    ('LibTIFF', '4.0.6'),
+    ('libgeotiff', '1.4.2'),
 ]
 
 sanity_check_paths = {

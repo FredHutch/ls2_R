@@ -5,6 +5,11 @@ Please look at [ls2](https://github.com/FredHutch/ls2) for details on how to bui
 This container adds:
 
 * R and easy_update.py to update CRAN and Bioconductor library versions
+* `R-3.4.3-foss-2016b-fh2` environment module
+* an `R` wrapper script to automate Lmod and environment module loading, allowing:
+```
+docker run fredhutch/ls2_r:3.4.3 R <commands, etc>
+```
 
 ## Building this container
 

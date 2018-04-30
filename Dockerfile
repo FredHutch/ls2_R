@@ -46,6 +46,9 @@ RUN DEBIAN_FRONTEND=noninteractive \
 # gather installed pkgs list
 RUN dpkg -l > /ls2/installed_pkgs.${EB_NAME}
 
+# copy in wrapper
+COPY R /home/neo/
+
 # switch to LS2 user for future actions
 USER ${LS2_USERNAME}
 WORKDIR /home/${LS2_USERNAME}

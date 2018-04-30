@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# simple wrapper to load environment module
+
+# enables user to run `docker run .. R ...` with auto env mod load
+
+source /app/lmod/lmod/init/bash
+module use /app/modules/all
+modules load R
+
+R $@
