@@ -6,6 +6,6 @@
 
 source /app/lmod/lmod/init/bash
 module use /app/modules/all
-modules load R
+module load R
 
 R $@
