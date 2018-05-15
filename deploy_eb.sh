@@ -8,9 +8,10 @@ set -e
 groupadd -g $OUT_GID outside_group
 useradd -u $OUT_UID -g outside_group outside_user 
 
+DEBIAN_FRONTEND=noninteractive apt-get update -y
 DEBIAN_FRONTEND=noninteractive apt-get install -y ${INSTALL_OS_PKGS}
 
-su -c "/bin/bash /ls2/install_eb.sh" outside_user
+su -c "/bin/bash /ls2/install_eb.sh ${EB_NAME}.eb" outside_user
 
 su -c "source ${DEPLOY_PREFIX}/lmod/lmod/init/bash \
        && ${DEPLOY_PREFIX}/lmod/lmod/libexec/update_lmod_system_cache_files ${DEPLOY_PREFIX}/modules/all" outside_user

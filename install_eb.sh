@@ -3,9 +3,6 @@
 set -x
 set -e
 
-# variables used: $1 easyconfig name
-env
-
 # try to preserve group write here
 umask 002
 
