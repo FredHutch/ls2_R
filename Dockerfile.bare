@@ -27,6 +27,8 @@ COPY download_sources.sh /ls2/
 COPY easybuild-life-sciences/scripts/easy_update.py /ls2/
 COPY easyconfigs/* /app/fh_easyconfigs/
 COPY sources/* /app/sources/
+COPY R /usr/local/bin/
+COPY Rscript /usr/local/bin/
 RUN /bin/bash /ls2/download_sources.sh
 
 # install and uninstall build-essential in one step to reduce layer size
